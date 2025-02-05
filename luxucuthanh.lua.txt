@@ -6940,9 +6940,10 @@ Tabs.Misc:AddButton({
 	Title = "Cửa Hàng Bán Trái",
 	Description = "",
 	Callback = function()
-  FireRemote("GetFruits")
-	Player.PlayerGui.Main.FruitShop.Visible = true
-end})
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",Select_Devil_Fruit)
+ end
+ })
 
 
 
@@ -7285,20 +7286,3 @@ Tabs.Misc:AddButton({
         end
     end
 })
-
-Tabs.Misc:AddButton({"Remove Fog", function()
-  local LightingLayers, Sky = Lighting:FindFirstChild("LightingLayers"), Lighting:FindFirstChild("Sky")
-  if Sky then
-    Sky:Destroy()
-  end
-  if LightingLayers then
-    LightingLayers:Destroy()
-  end
-end})
-
-Tabs.Misc:AddToggle({"Remove Damage", true, function(Value)
-  ReplicatedStorage.Assets.GUI.DamageCounter.Enabled = not Value
-end, "Misc/RemoveDamage"})
-table.insert(AFKOptions, Tabs.Misc:AddToggle({"Remove Notifications", false, function(Value)
-  Player.PlayerGui.Notifications.Enabled = not Value
-end, "Misc/RemoveNotifications"}))
