@@ -5280,29 +5280,29 @@ spawn(function()
     end
 end)
 
-local ToggleRemoveLava = Tabs.Player:AddToggle("ToggleRemoveLava", {
-    Title = "Xóa Lava", 
-    Description = "", 
-    Default = true
-})
+-- Tạo Toggle để bật/tắt chức năng xóa dung nham
+local ToggleRemoveLava = Tabs.Player:AddToggle("ToggleRemoveLava", {Title = "Xóa Dung Nham", Description = "Vô hiệu hóa hoặc xóa dung nham", Default = false})
 
 ToggleRemoveLava:OnChanged(function(value)
-    _G.RemoveLava = value
+    _G.RemoveLava = value  -- Lưu giá trị toggle
 end)
 
-Options.ToggleRemoveLava:SetValue(false)
-
 spawn(function()
-    while wait(1) do
-        if _G.RemoveLava then
-            pcall(function()
-                for _, v in pairs(game.Workspace:GetDescendants()) do
-                    if v:IsA("Part") and v.Name:lower():find("lava") then
+    while wait(0.1) do
+        pcall(function()
+            if _G.RemoveLava then
+                -- Duyệt qua tất cả các đối tượng trong workspace
+                for _, v in pairs(workspace:GetDescendants()) do
+                    -- Kiểm tra nếu đối tượng là một BasePart và có tên hoặc đặc điểm nhận diện dung nham
+                    if v:IsA("BasePart") and v.Name == "Lava" then
+                        -- Xóa dung nham khỏi game
                         v:Destroy()
+                        -- Hoặc vô hiệu hóa va chạm với dung nham thay vì xóa
+                        -- v.CanCollide = false
                     end
                 end
-            end)
-        end
+            end
+        end)
     end
 end)
 
@@ -6757,21 +6757,26 @@ Tabs.Shop:AddButton({
 -- Mua Tộc Rồng
 Tabs.Shop:AddButton({
     Title = "Mua Tộc Rồng",
-    Description = "",
-    Callback = function()            
-        local args = {[1] = "BuyRace", [2] = "Draco"}
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    Description = "Mua Tộc Rồng (Draco)",
+    Callback = function()
+        -- Đảm bảo rằng bạn đang gọi đúng tham số và sự kiện
+        local args = {[1] = "Draco", [2] = "BuyRace"}  -- Tham số xác định tộc và hành động "Mua Race"
+        
+        -- Gửi yêu cầu tới server để mua tộc Rồng
+        pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end)
     end
 })
 
 -- Random Tộc
 Tabs.Shop:AddButton({
-    Title = "Random Tộc",
-    Description = "",
-    Callback = function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "1")
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-    end
+	Title = "Random Tộc",
+	Description = "",
+	Callback = function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+	end
 })
 
 
