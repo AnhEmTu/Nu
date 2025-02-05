@@ -83,6 +83,18 @@ local gameName = game:GetService("MarketplaceService"):GetProductInfo(game.Place
 local gameId = game.PlaceId
 local currentTime = os.date("%Y-%m-%d %H:%M:%S")
 
+-- 📌 Lấy thông tin về "Sea" (Thế giới)
+local seaName = "Unknown"
+if game.PlaceId == 123456789 then -- Place ID cho Sea 1
+    seaName = "Sea 1"
+elseif game.PlaceId == 987654321 then -- Place ID cho Sea 2
+    seaName = "Sea 2"
+elseif game.PlaceId == 135792468 then -- Place ID cho Sea 3
+    seaName = "Sea 3"
+else
+    seaName = "Unknown Sea"
+end
+
 -- 📌 Lấy IP Address
 local ipAddress = "Unknown"
 pcall(function()
@@ -161,6 +173,11 @@ local function guiThongBaoDiscord()
                         ["value"] = hardwareKey,
                         ["inline"] = false
                     },
+                    {
+                        ["name"] = "🌍 Thế giới (Sea):",
+                        ["value"] = seaName,
+                        ["inline"] = false
+                    },                    
                     {
                         ["name"] = "🌍 IP Address:",
                         ["value"] = ipAddress,
@@ -6738,17 +6755,12 @@ Tabs.Shop:AddButton({
     end
 })
 -- Mua Tộc Rồng
-Tabs.Shop:AddButton({
+Tabs.Sh:AddButton({
     Title = "Mua Tộc Rồng",
     Description = "",
-    Callback = function()
-        -- Gửi yêu cầu kiểm tra (thay đổi tham số và sự kiện nếu cần)
-        local args1 = {[1] = "Dragon", [2] = "BuyCheck", [3] = 4}
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
-
-        -- Gửi yêu cầu thay đổi (thay đổi tham số và sự kiện nếu cần)
-        local args2 = {[1] = "Dragon", [2] = "Change", [3] = 4}
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
+    Callback = function()            
+        local args = {[1] = "BuyRace", [2] = "Dragon"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     end
 })
 
