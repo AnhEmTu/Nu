@@ -4660,19 +4660,23 @@ if Second_Sea then
             while wait(.1) do
                 pcall(function()
                     if _G.BuyLengendSword or Triple_A then
-                        local args = {
-                            [1] = "LegendarySwordDealer",
-                            [2] = "2"
-                        }
-                        -- Triple_A
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-                    else
-                        wait(2)
-                    end
-                end)
-            end
-        end)
+local args1 = { "LegendarySwordDealer", "1" }
+                local args2 = { "LegendarySwordDealer", "2" }
+                local args3 = { "LegendarySwordDealer", "3" }
+                
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args3))
+
+                if _G.BuyLengendSword_Hop and _G.BuyLengendSword and World2 then
+                NotificationLibrary:SendNotification("Warning", "Server HOP...", 6)
+                    wait(5)
+                    Hop()
+                end
+            end)
+        end
     end
+end)
 
 local SettingFarm = Tabs.Setting:AddSection("Cài Đặt")
 
@@ -5225,7 +5229,7 @@ end)
 
 local test = Tabs.Player:AddSection("Misc")
 
-local ToggleNoClip = Tabs.Player:AddToggle("ToggleNoClip", {Title = "Xuyên Tường",Description = "", Default = false })
+local ToggleNoClip = Tabs.Player:AddToggle("ToggleNoClip", {Title = "Xuyên Tường",Description = "", Default = true })
 ToggleNoClip:OnChanged(function(value)
     _G.LOf = value
 end)
@@ -5259,6 +5263,32 @@ spawn(function()
                 game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
             end
         end)
+    end
+end)
+
+local ToggleRemoveLava = Tabs.Player:AddToggle("ToggleRemoveLava", {
+    Title = "Xóa Lava", 
+    Description = "", 
+    Default = true
+})
+
+ToggleRemoveLava:OnChanged(function(value)
+    _G.RemoveLava = value
+end)
+
+Options.ToggleRemoveLava:SetValue(false)
+
+spawn(function()
+    while wait(1) do
+        if _G.RemoveLava then
+            pcall(function()
+                for _, v in pairs(game.Workspace:GetDescendants()) do
+                    if v:IsA("Part") and v.Name:lower():find("lava") then
+                        v:Destroy()
+                    end
+                end
+            end)
+        end
     end
 end)
 
@@ -6676,7 +6706,7 @@ Tabs.Shop:AddButton({
 	end
 })
 
-local Mastery = Tabs.Shop:AddSection("Vật Phẩm Khác")
+local Mastery = Tabs.Shop:AddSection("Phần Khác")
 
 Tabs.Shop:AddButton({
 	Title = "Hoàn trả chỉ số",
@@ -6686,6 +6716,36 @@ Tabs.Shop:AddButton({
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
 	end
 })
+    
+    Tabs.Shop:AddButton({
+        Title = "Mua Tộc Quỷ",
+        Description = "",
+        Callback = function()            
+local args = {[1] = "Ectoplasm", [2] = "BuyCheck", [3] = 4}
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        local args = {[1] = "Ectoplasm", [2] = "Change", [3] = 4}
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end
+    })
+    
+    Tabs.Shop:AddButton({
+        Title = "Mua Tộc Người Máy",
+        Description = "",
+        Callback = function()            
+local args = {[1] = "CyborgTrainer", [2] = "Buy"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end
+    })
+    
+    Tabs.Shop:AddButton({
+    Title = "Mua Tộc Rồng",
+    Description = "",
+    Callback = function()            
+        local args = {[1] = "BuyRace", [2] = "Dragon"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    end
+})
+
 Tabs.Shop:AddButton({
 	Title = "Random Tộc",
 	Description = "",
