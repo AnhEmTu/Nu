@@ -4650,31 +4650,36 @@ if Second_Sea or Third_Sea then
 end
 
 if Second_Sea then
-    local ToggleSwordLengend = Tabs.Main:AddToggle("ToggleSwordLengend", {Title = "Mua Kiếm Huyền Thoại",Default = false })
-    ToggleSwordLengend:OnChanged(function(Value)
-        _G.BuyLengendSword = Value
-    end)
-        Options.ToggleSwordLengend:SetValue(false)
 
-        spawn(function()
-            while wait(.1) do
-                pcall(function()
-                    if _G.BuyLengendSword or Triple_A then
-local args1 = { "LegendarySwordDealer", "1" }
+local ToggleSwordLegend = Tabs.Main:AddToggle("ToggleSwordLegend", {Title = "Mua Kiếm Huyền Thoại", Default = false })
+ToggleSwordLegend:OnChanged(function(Value)
+    _G.BuyLegendSword = Value
+end)
+
+Options.ToggleSwordLegend:SetValue(false)
+
+spawn(function()
+    while wait(0.1) do
+        pcall(function()
+            if _G.BuyLegendSword or Triple_A then
+                -- Gửi yêu cầu mua kiếm huyền thoại
+                local args1 = { "LegendarySwordDealer", "1" }
                 local args2 = { "LegendarySwordDealer", "2" }
                 local args3 = { "LegendarySwordDealer", "3" }
                 
+                -- Gửi các yêu cầu tới server
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args3))
 
-                if _G.BuyLengendSword_Hop and _G.BuyLengendSword and World2 then
-                NotificationLibrary:SendNotification("Warning", "Server HOP...", 6)
+                -- Nếu bật chế độ HOP và mua kiếm, thực hiện chuyển server
+                if _G.BuyLegendSword_Hop and _G.BuyLegendSword and World2 then
+                    NotificationLibrary:SendNotification("Warning", "Server HOP...", 6)
                     wait(5)
-                    Hop()
+                    Hop()  -- Chức năng nhảy server
                 end
-            end)
-        end
+            end
+        end)
     end
 end)
 
@@ -6708,51 +6713,56 @@ Tabs.Shop:AddButton({
 
 local Mastery = Tabs.Shop:AddSection("Phần Khác")
 
+-- Hoàn trả chỉ số
 Tabs.Shop:AddButton({
-	Title = "Hoàn trả chỉ số",
-	Description = "",
-	Callback = function()
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
-	end
-})
-    
-    Tabs.Shop:AddButton({
-        Title = "Mua Tộc Quỷ",
-        Description = "",
-        Callback = function()            
-local args = {[1] = "Ectoplasm", [2] = "BuyCheck", [3] = 4}
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        local args = {[1] = "Ectoplasm", [2] = "Change", [3] = 4}
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        end
-    })
-    
-    Tabs.Shop:AddButton({
-        Title = "Mua Tộc Người Máy",
-        Description = "",
-        Callback = function()            
-local args = {[1] = "CyborgTrainer", [2] = "Buy"}
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        end
-    })
-    
-    Tabs.Shop:AddButton({
-    Title = "Mua Tộc Rồng",
+    Title = "Hoàn trả chỉ số",
     Description = "",
-    Callback = function()            
-        local args = {[1] = "BuyRace", [2] = "Dragon"}
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Refund", "1")
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Refund", "2")
+    end
+})
+
+-- Mua Tộc Quỷ
+Tabs.Shop:AddButton({
+    Title = "Mua Tộc Quỷ",
+    Description = "",
+    Callback = function()
+        local args = {[1] = "Ectoplasm", [2] = "BuyCheck", [3] = 4}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        local args = {[1] = "Ectoplasm", [2] = "Change", [3] = 4}
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     end
 })
 
+-- Mua Tộc Người Máy
 Tabs.Shop:AddButton({
-	Title = "Random Tộc",
-	Description = "",
-	Callback = function()
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
-	end
+    Title = "Mua Tộc Người Máy",
+    Description = "",
+    Callback = function()
+        local args = {[1] = "CyborgTrainer", [2] = "Buy"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    end
+})
+
+-- Mua Tộc Rồng
+Tabs.Shop:AddButton({
+    Title = "Mua Tộc Rồng",
+    Description = "",
+    Callback = function()
+        local args = {[1] = "Dragon", [2] = "BuyRace"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    end
+})
+
+-- Random Tộc
+Tabs.Shop:AddButton({
+    Title = "Random Tộc",
+    Description = "",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "1")
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+    end
 })
 
 
@@ -6979,7 +6989,7 @@ Tabs.Misc:AddButton({
 
 
 Tabs.Misc:AddButton({
-	Title = "Mở Baảng Danh Hiệu",
+	Title = "Mở Bảng Danh Hiệu",
 	Description = "",
 	Callback = function()
 		local args = {
