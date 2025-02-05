@@ -56,14 +56,14 @@ c.CornerRadius = UDim.new(0, 30)
 c.Parent = b
 
 d.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(244, 0, 0)), ColorSequenceKeypoint.new(0.32, Color3.fromRGB(146, 255, 251)), ColorSequenceKeypoint.new(0.65, Color3.fromRGB(180, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(96, 255, 231))}
-d.Parent = ImageButton
+d.Parent = b
 
-e.Parent = ImageButton
+e.Parent = b
 e.AspectRatio = 0.988
 
 
 local function HCEGY_fake_script()
-	local script = Instance.new('LocalScript', UIGradient)
+	local script = Instance.new('LocalScript', d)
 
 	local TweenService = game:GetService("TweenService")
 	local tweeninfo = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
@@ -72,7 +72,7 @@ local function HCEGY_fake_script()
 end
 coroutine.wrap(HCEGY_fake_script)()
 local function YTZCAJC_fake_script()
-	local script = Instance.new('LocalScript', ImageButton)
+	local script = Instance.new('LocalScript', b)
 
 	local UIS = game:GetService('UserInputService')
 	local frame = script.Parent
