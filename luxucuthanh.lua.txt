@@ -6759,7 +6759,7 @@ Tabs.Shop:AddButton({
     Title = "Mua Tộc Rồng",
     Description = "",
     Callback = function()            
-        local args = {[1] = "BuyRace", [2] = "Dragon"}
+        local args = {[1] = "BuyRace", [2] = "Draco"}
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
     end
 })
