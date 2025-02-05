@@ -85,11 +85,11 @@ local currentTime = os.date("%Y-%m-%d %H:%M:%S")
 
 -- 📌 Lấy thông tin về "Sea" (Thế giới)
 local seaName = "Unknown"
-if game.PlaceId == 123456789 then -- Place ID cho Sea 1
+if game.PlaceId == 2753915549 then -- Place ID cho Sea 1
     seaName = "Sea 1"
-elseif game.PlaceId == 987654321 then -- Place ID cho Sea 2
+elseif game.PlaceId == 4442272183 then -- Place ID cho Sea 2
     seaName = "Sea 2"
-elseif game.PlaceId == 135792468 then -- Place ID cho Sea 3
+elseif game.PlaceId == 7449423635 then -- Place ID cho Sea 3
     seaName = "Sea 3"
 else
     seaName = "Unknown Sea"
@@ -6755,7 +6755,7 @@ Tabs.Shop:AddButton({
     end
 })
 -- Mua Tộc Rồng
-Tabs.Sh:AddButton({
+Tabs.Shop:AddButton({
     Title = "Mua Tộc Rồng",
     Description = "",
     Callback = function()            
