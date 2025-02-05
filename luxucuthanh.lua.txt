@@ -6874,46 +6874,7 @@ function Hop()
 	Teleport()
 end      
 
-        Misc:AddTextbox({
-            Name = "Job Id Placed",
-            Default = "",
-            TextDisappear = true,
-            Callback = function(Value)
-                _G.Job = Value 
-            end	  
-        })
 
-        Misc:AddButton({
-            Name = "Join Id",
-            Callback = function()
-                _G.AutoRejoin = false
-                game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
-              end    
-        })
-
-        Misc:AddButton({
-            Name = "Copy Job Id",
-            Callback = function()
-                setclipboard(tostring(game.JobId))
-              end    
-            })
-
-        Misc:AddButton({
-            Name = "Hop Sever",
-            Callback = function()
-                _G.AutoRejoin = false
-                Hop()
-              end    
-        })
-
-        Misc:AddButton({
-            Name = "Rejoin Sever",
-            Callback = function()
-                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-              end    
-        })
-        
-        
 local Mastery = Tabs.Misc:AddSection("Đội")
 
 
@@ -6940,10 +6901,10 @@ Tabs.Misc:AddButton({
 	Title = "Cửa Hàng Bán Trái",
 	Description = "",
 	Callback = function()
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit",Select_Devil_Fruit)
- end
- })
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
+        game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true
+	end
+})
 
 
 
@@ -7286,3 +7247,4 @@ Tabs.Misc:AddButton({
         end
     end
 })
+
