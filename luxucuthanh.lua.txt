@@ -4651,37 +4651,29 @@ end
 
 if Second_Sea then
 
-local ToggleSwordLegend = Tabs.Main:AddToggle("ToggleSwordLegend", {Title = "Mua Kiếm Huyền Thoại", Default = false })
-ToggleSwordLegend:OnChanged(function(Value)
-    _G.BuyLegendSword = Value
-end)
+    local ToggleSwordLengend = Tabs.Main:AddToggle("ToggleSwordLengend", {Title = "Mua Kiếm Huyền Thoại",Default = false })
+    ToggleSwordLengend:OnChanged(function(Value)
+        _G.BuyLengendSword = Value
+    end)
+        Options.ToggleSwordLengend:SetValue(false)
 
-Options.ToggleSwordLegend:SetValue(false)
-
-spawn(function()
-    while wait(0.1) do
-        pcall(function()
-            if _G.BuyLegendSword or Triple_A then
-                -- Gửi yêu cầu mua kiếm huyền thoại
-                local args1 = { "LegendarySwordDealer", "1" }
-                local args2 = { "LegendarySwordDealer", "2" }
-                local args3 = { "LegendarySwordDealer", "3" }
-                
-                -- Gửi các yêu cầu tới server
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args3))
-
-                -- Nếu bật chế độ HOP và mua kiếm, thực hiện chuyển server
-                if _G.BuyLegendSword_Hop and _G.BuyLegendSword and World2 then
-                    NotificationLibrary:SendNotification("Warning", "Server HOP...", 6)
-                    wait(5)
-                    Hop()  -- Chức năng nhảy server
-                end
+        spawn(function()
+            while wait(.1) do
+                pcall(function()
+                    if _G.BuyLengendSword or Triple_A then
+                        local args = {
+                            [1] = "LegendarySwordDealer",
+                            [2] = "2"
+                        }
+                        -- Triple_A
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                    else
+                        wait(2)
+                    end
+                end)
             end
         end)
     end
-end)
 
 local SettingFarm = Tabs.Setting:AddSection("Cài Đặt")
 
