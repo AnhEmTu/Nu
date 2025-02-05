@@ -6740,23 +6740,15 @@ Tabs.Shop:AddButton({
 -- Mua Tộc Rồng
 Tabs.Shop:AddButton({
     Title = "Mua Tộc Rồng",
-    Description = "Nhấn để mua tộc Rồng",
+    Description = "",
     Callback = function()
-        -- Kiểm tra nếu người chơi có đủ điều kiện mua tộc
-        local args = {["Race"] = "Dragon", ["Action"] = "BuyRace"}
-        
-        -- Gửi yêu cầu tới server để mua tộc Rồng
-        local success, response = pcall(function()
-            return game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-        end)
-        
-        if success then
-            -- Thông báo nếu mua tộc thành công
-            print("Đã mua tộc Rồng thành công!")
-        else
-            -- Thông báo nếu có lỗi trong quá trình gửi yêu cầu
-            print("Lỗi khi mua tộc Rồng: " .. response)
-        end
+        -- Gửi yêu cầu kiểm tra (thay đổi tham số và sự kiện nếu cần)
+        local args1 = {[1] = "Dragon", [2] = "BuyCheck", [3] = 4}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
+
+        -- Gửi yêu cầu thay đổi (thay đổi tham số và sự kiện nếu cần)
+        local args2 = {[1] = "Dragon", [2] = "Change", [3] = 4}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
     end
 })
 
