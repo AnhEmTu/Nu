@@ -1,0 +1,29 @@
+local Notification = require(game:GetService("ReplicatedStorage").Notification)
+Notification.new("<Color=Cyan>Teddy Hub <Color=/>"):Display()
+wait(0.5)
+Notification.new("<Color=Yellow>Teddy On Top👑<Color=/>"):Display()
+wait(1)
+local SlayerzLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/x2-Neptune/SlayerzUI/main/Library.script"))()
+
+local Name = "Teddy Hub | Blox Fruits"
+local Description = "Discord: Tboy Roblox Community | User : "..game.Players.LocalPlayer.Name.." Toggle : Del"
+local Image = "rbxassetid://106227119466886"
+local Color = Color3.fromRGB(0, 255, 145)
+
+local Window = SlayerzLibrary:Window(Name,Description,Image,Color)
+
+local Tab = Window:Tab("General","9158926514")
+local Tab1 = Window:Tab(" Auto","9092095556")
+local Tab2 = Window:Tab("Combat ","7072724538")
+local Tab4 = Window:Tab("Travel","6035190846")
+local Tab3 = Window:Tab(" Shop","7072715646")
+local Tab6 = Window:Tab("Misc","6663675885")
+
+local Section = Tab:Section("- Auto Farm -","Left")
+local Section2 = Tab:Section("- Setting -","Right")
+local Section3 = Tab:Section("- Farm Boss -","Left")
+local Mys1 = Tab1:Section("- Race Upgrade -","Left")
+local Mys = Tab1:Section("- Mirage -","Left")
+local Mys3 = Tab1:Section("- Sea Event -","Right")
+local Section10 = Tab1:Section("- Auto Other -","Left")
+local TusitaSSCZ = Tab:Section("- Tusita -","Right")
