@@ -173,8 +173,11 @@ local playerCount = #game.Players:GetPlayers()
 local maxPlayers = 12  
 
 -- 📌 Kiểm tra xem người chơi có ở server VIP hay không
+-- 📌 Kiểm tra xem người chơi có ở server VIP hay không
 local isVIPServer = false
-if game.PrivateServerId ~= "" then
+
+-- Kiểm tra PrivateServerId có phải là một ID hợp lệ hay không (nếu có nghĩa là server VIP)
+if game.PrivateServerId ~= "" and game.PrivateServerId ~= "00000000-0000-0000-0000-000000000000" then
     isVIPServer = true
 end
 
@@ -310,6 +313,15 @@ game.StarterGui:SetCore("SendNotification", {
     Title = "Executor",
     Text = "Bạn đang dùng: " .. executor,
     Duration = 5
+})
+
+-- 📌 Hiển thị thông báo trên Roblox về server VIP/Thường
+local serverStatusMessage = isVIPServer and "Bạn đang ở **Server VIP**" or "Bạn đang ở **Server Thường**"
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Server Status",
+    Text = serverStatusMessage,
+    Duration = 10
 })
 
 repeat wait() until game.Players
