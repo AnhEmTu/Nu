@@ -1,49 +1,9 @@
 
---Key
-wait(0.1)
-AlchemyNotify("Thanks for using R2LX Hub!",5)
-wait(0.1)
-AlchemyNotify("discord.gg/dUdzZskBCC",5)
-wait(0.5)
-local Notification = require(game:GetService("ReplicatedStorage").Notification)
-Notification.new("<Color=Cyan>R2LLX Hub V1Script<Color=/>"):Display()
-wait(0.5)
-Notification.new("<Color=Yellow>Create By R2LX<Color=/>"):Display()
-wait(1)
-repeat
-    wait()
-until game.Players.LocalPlayer
-
-HomePage:Seperator("R2LX Hub")
-
-HomePage:Label("Blox Fruits | English Version")
-
-HomePage:Seperator("Status")
-local AlchemyStatuOn_Time = HomePage:Label("")
-local AlchemyStatuOn_Player = HomePage:Label("Name : "..game.Players.LocalPlayer.Name)
-local AlchemyStatuOn_FPS = HomePage:Label("")
-local AlchemyStatuOn_Ping = HomePage:Label("")
-function AUpdateInfo()
-    local gameTime = math.floor(game:GetService("Workspace").DistributedGameTime + 0.5)
-    local hour = math.floor(gameTime / (60^2)) % 24
-    local minute = math.floor(gameTime / (60^1)) % 60
-    local second = math.floor(gameTime / (60^0)) % 60
-    local fps = game:GetService("Workspace"):GetRealPhysicsFPS()
-    local Ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
-    AlchemyStatuOn_Time:Set("Time : ".. hour .. " : " .. minute .. " : " .. second)
-    AlchemyStatuOn_FPS:Set("FPS : "..fps)
-    AlchemyStatuOn_Ping:Set("Ping : "..Ping)
-end
-task.spawn(function()
-    while task.wait() do
-        AUpdateInfo()
-    end
-end)
-HomePage:Label("Join Our Discord for News")
-HomePage:Button("Copy Discord Link", function()
-    AlchemyNotify("Copy Discord Link!",5)
-    setclipboard("https://discord.gg/dUdzZskBCC")
-end)
+-- Tải Fluent UI Library
+local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- Âm thanh khởi động
 local startupSound = Instance.new("Sound")
@@ -53,10 +13,33 @@ startupSound.Looped = false -- Không lặp lại âm thanh
 startupSound.Parent = game.CoreGui-- Đặt parent vào CoreGui để đảm bảo âm thanh phát
 startupSound:Play() -- Phát âm thanh khi script chạy
 
+
+local Notification = require(game:GetService("ReplicatedStorage").Notification)
+Notification.new("<Color=Cyan>R2LX Hub <Color=/>"):Display()
+wait(0.5)
+Notification.new("<Color=Yellow>By R2LX Hub On Top👑<Color=/>"):Display()
+wait(1)
+
 -- Thông Báo Executor
 
 -- 🛠 Xác định Executor
+-- 📌 Lấy thông tin thiết bị
+local UserInputService = game:GetService("UserInputService")
+local deviceType = "Unknown"
+
+if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
+    deviceType = "Mobile"
+elseif UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
+    deviceType = "PC"
+elseif UserInputService.GamepadEnabled then
+    deviceType = "Console"
+end
+
+-- 📌 Xác định Executor
 local executor = "Unknown"
+local isMobile = false
+local isIOS = false
+local isAndroid = false
 
 if identifyexecutor then
     executor = identifyexecutor()
@@ -78,22 +61,42 @@ elseif (getgenv and debug and debug.getinfo) then
     executor = "Possible PC Executor"
 elseif (writefile and readfile) then
     executor = "Possible Mobile Executor"
-
+    
 -- 📌 Executor dành cho iOS
 elseif (protect_gui and isfile) then
     executor = "Delta (iOS)"
+    isMobile = true
+    isIOS = true
 elseif (hookfunction and getnamecallmethod) then
     executor = "ScriptWare (iOS & PC)"
+    isMobile = true
+    isIOS = true
 elseif (isnetworkowner and islclosure) then
-    executor = "Arceus X (Android & iOS)"
+    executor = "Arceus X (iOS)"
+    isMobile = true
+    isIOS = true
 elseif (getrawmetatable and setreadonly) then
     executor = "Magma Executor (iOS)"
+    isMobile = true
+    isIOS = true
 
 -- 📌 Executor dành cho Android
+elseif (protect_gui and isfile) then
+    executor = "Delta (Android)"  -- Thêm executor Delta cho Android
+    isMobile = true
+    isAndroid = true
 elseif (isexecutor and isfile) then
     executor = "Electron (Android)"
+    isMobile = true
+    isAndroid = true
 elseif (isfile and readfile and writefile) then
     executor = "Fluxus Mobile (Android)"
+    isMobile = true
+    isAndroid = true
+elseif (isnetworkowner and islclosure) then
+    executor = "Arceus X (Android)"
+    isMobile = true
+    isAndroid = true
 
 -- 📌 Executor khác
 elseif (syn and syn.request) then
@@ -102,6 +105,17 @@ elseif (secure_call and syn) then
     executor = "Comet (PC)"
 elseif (firetouchinterest and syn) then
     executor = "Celestial (PC)"
+end
+
+-- 📌 Xác định chính xác loại thiết bị
+if isMobile then
+    if isIOS then
+        deviceType = "Mobile (iOS)"
+    elseif isAndroid then
+        deviceType = "Mobile (Android)"
+    else
+        deviceType = "Mobile (Unknown OS)"
+    end
 end
 
 -- 📌 Lấy thông tin nhân vật
@@ -363,9 +377,7 @@ InputService.WindowFocusReleased:Connect(
     end
 )
 
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+-- Main Gui
 
 local Window = Fluent:CreateWindow({
     Title = "R2LX HUB",
