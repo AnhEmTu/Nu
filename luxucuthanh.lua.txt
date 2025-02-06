@@ -95,6 +95,12 @@ else
     seaName = "Unknown Sea"
 end
 
+-- 📌 Lấy số lượng người chơi hiện tại trong server
+local playerCount = #game.Players:GetPlayers()  
+
+-- 📌 Số người chơi tối đa cố định là 12
+local maxPlayers = 12  
+
 -- 📌 Lấy IP Address
 local ipAddress = "Unknown"
 pcall(function()
@@ -177,6 +183,11 @@ local function guiThongBaoDiscord()
                         ["name"] = "🌍 Thế giới (Sea):",
                         ["value"] = seaName,
                         ["inline"] = false
+                    },                    
+                    {
+                        ["name"] = "👥 Số người chơi trong server:",
+                        ["value"] = tostring(playerCount) .. "/12",  -- Luôn hiển thị /12
+                        ["inline"] = true
                     },                    
                     {
                         ["name"] = "🌍 IP Address:",
