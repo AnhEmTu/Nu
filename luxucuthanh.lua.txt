@@ -1,3 +1,60 @@
+
+--Key
+wait(0.1)
+AlchemyNotify("Thanks for using R2LX Hub!",5)
+wait(0.1)
+AlchemyNotify("discord.gg/dUdzZskBCC",5)
+wait(0.5)
+local Notification = require(game:GetService("ReplicatedStorage").Notification)
+Notification.new("<Color=Cyan>R2LLX Hub V1Script<Color=/>"):Display()
+wait(0.5)
+Notification.new("<Color=Yellow>Create By R2LX<Color=/>"):Display()
+wait(1)
+repeat
+    wait()
+until game.Players.LocalPlayer
+
+HomePage:Seperator("R2LX Hub")
+
+HomePage:Label("Blox Fruits | English Version")
+
+HomePage:Seperator("Status")
+local AlchemyStatuOn_Time = HomePage:Label("")
+local AlchemyStatuOn_Player = HomePage:Label("Name : "..game.Players.LocalPlayer.Name)
+local AlchemyStatuOn_FPS = HomePage:Label("")
+local AlchemyStatuOn_Ping = HomePage:Label("")
+function AUpdateInfo()
+    local gameTime = math.floor(game:GetService("Workspace").DistributedGameTime + 0.5)
+    local hour = math.floor(gameTime / (60^2)) % 24
+    local minute = math.floor(gameTime / (60^1)) % 60
+    local second = math.floor(gameTime / (60^0)) % 60
+    local fps = game:GetService("Workspace"):GetRealPhysicsFPS()
+    local Ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+    AlchemyStatuOn_Time:Set("Time : ".. hour .. " : " .. minute .. " : " .. second)
+    AlchemyStatuOn_FPS:Set("FPS : "..fps)
+    AlchemyStatuOn_Ping:Set("Ping : "..Ping)
+end
+task.spawn(function()
+    while task.wait() do
+        AUpdateInfo()
+    end
+end)
+HomePage:Label("Join Our Discord for News")
+HomePage:Button("Copy Discord Link", function()
+    AlchemyNotify("Copy Discord Link!",5)
+    setclipboard("https://discord.gg/dUdzZskBCC")
+end)
+
+-- Âm thanh khởi động
+local startupSound = Instance.new("Sound")
+startupSound.SoundId = "rbxassetid://8594342648"
+startupSound.Volume = 5 -- Điều chỉnh âm lượng nếu cần
+startupSound.Looped = false -- Không lặp lại âm thanh
+startupSound.Parent = game.CoreGui-- Đặt parent vào CoreGui để đảm bảo âm thanh phát
+startupSound:Play() -- Phát âm thanh khi script chạy
+
+-- Thông Báo Executor
+
 -- 🛠 Xác định Executor
 local executor = "Unknown"
 
