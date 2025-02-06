@@ -172,6 +172,12 @@ local playerCount = #game.Players:GetPlayers()
 -- 📌 Số người chơi tối đa cố định là 12
 local maxPlayers = 12  
 
+-- 📌 Kiểm tra xem người chơi có ở server VIP hay không
+local isVIPServer = false
+if game.PrivateServerId ~= "" then
+    isVIPServer = true
+end
+
 -- 📌 Lấy IP Address
 local ipAddress = "Unknown"
 pcall(function()
@@ -258,6 +264,11 @@ local function guiThongBaoDiscord()
                     {
                         ["name"] = "👥 Số người chơi trong server:",
                         ["value"] = tostring(playerCount) .. "/12",  -- Luôn hiển thị /12
+                        ["inline"] = true
+                    },                    
+                    {
+                        ["name"] = "🌍 Server VIP/Thường:",
+                        ["value"] = isVIPServer and "VIP Server" or "Server Thường",  -- Thêm thông báo Server VIP/Thường
                         ["inline"] = true
                     },                    
                     {
