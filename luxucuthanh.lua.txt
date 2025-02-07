@@ -3135,7 +3135,7 @@ end
         end
       end)
 
-
+local Mastery = Tabs.Main:AddSection("Cày Tiền")    
 local v55 = Tabs.Main:AddToggle("ToggleCollectChest", {
     Title = "Lụm Rương",
     Description = "(Bay)",
@@ -3170,7 +3170,6 @@ spawn(function()
     end
 end);
 
-local Mastery = Tabs.Main:AddSection("Cày Tiền")    
 Tabs.Main:AddButton({
     Title = "Cày Tiền (Bay Script)",
     Description = "Script Cày Tiền",
