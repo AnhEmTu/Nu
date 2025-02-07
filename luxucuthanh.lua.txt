@@ -3177,10 +3177,43 @@ end
         end)
 
 
+local v55 = Tabs.Main:AddToggle("ToggleCollectChest", {
+    Title = "Lụm Rương",
+    Description = "(Bay)",
+    Default = false
+});
+v55:OnChanged(function(v248)
+    _G.AutoCollectChest = v248;
+end);
+spawn(function()
+    while wait() do
+        if _G.AutoCollectChest then
+            local v673 = game:GetService("Players");
+            local v674 = v673.LocalPlayer;
+            local v675 = v674.Character or v674.CharacterAdded:Wait() ;
+            local v676 = v675:GetPivot().Position;
+            local v677 = game:GetService("CollectionService");
+            local v678 = v677:GetTagged("_ChestTagged");
+            local v679, v680 = math.huge;
+            for v765 = 1, # v678 do
+                local v766 = v678[v765];
+                local v767 = (v766:GetPivot().Position - v676).Magnitude;
+                if (not v766:GetAttribute("IsDisabled") and (v767 < v679)) then
+                    v679, v680 = v767, v766;
+                end
+            end
+            if v680 then
+                local v840 = v680:GetPivot().Position;
+                local v841 = CFrame.new(v840);
+                Tween2(v841);
+            end
+        end
+    end
+end);
 
 local Mastery = Tabs.Main:AddSection("Cày Tiền")    
 Tabs.Main:AddButton({
-    Title = "Cày Tiền (Bay)",
+    Title = "Cày Tiền (Bay Script)",
     Description = "Script Cày Tiền",
     Callback = function()
     
@@ -3214,7 +3247,7 @@ local Mastery = Tabs.Main:AddSection("Cày Thông Thạo")
     local SliderHealt = Tabs.Main:AddSlider("SliderHealt", {
         Title = "Health (%) Mob",
         Description = "",
-        Default = 25,
+        Default = 35,
         Min = 0,
         Max = 100,
         Rounding = 1,
