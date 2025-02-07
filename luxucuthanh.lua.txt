@@ -3135,46 +3135,43 @@ end
         end
       end)
 
-    local ToggleCastleRaid = Tabs.Main:AddToggle("ToggleCastleRaid", {Title = "Đánh Hải Tặc ở Pháo Đài", Default = false })
-    ToggleCastleRaid:OnChanged(function(Value)
-        _G.CastleRaid = Value
-    end)
-    Options.ToggleCastleRaid:SetValue(false)
-    spawn(function()
-        while wait() do
-            if _G.CastleRaid then
-                pcall(function()
-                    local CFrameCastleRaid = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
-                    if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if _G.CastleRaid and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
-                                    repeat wait(0)
-                                         
-                                        bringmob = true
-                                        AutoHaki()
-                                        EquipTool(SelectWeapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))
-                                    until v.Humanoid.Health <= 0 or not v.Parent or not _G.CastleRaid
-                                    bringmob = false
-                                end
+local v51 = Tabs.Main:AddToggle("ToggleCastleRaid", {
+    Title = "Đấm Hải Tặc",
+    Description = "farm pirate",
+    Default = false
+});
+v51:OnChanged(function(v239)
+    _G.CastleRaid = v239;
+end);
+v17.ToggleCastleRaid:SetValue(false);
+spawn(function()
+    while wait() do
+        if _G.CastleRaid then
+            pcall(function()
+                local v764 = CFrame.new(- 5496.17432, 313.768921, - 2841.53027, 0.924894512, 7.37058e-9, 0.380223751, 3.588102e-8, 1, - 1.06665446e-7, - 0.380223751, 1.1229711e-7, 0.924894512);
+                if ((CFrame.new(- 5539.3115234375, 313.800537109375, - 2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500) then
+                    for v1030, v1031 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if (_G.CastleRaid and v1031:FindFirstChild("HumanoidRootPart") and v1031:FindFirstChild("Humanoid") and (v1031.Humanoid.Health > 0)) then
+                            if ((v1031.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000) then
+                                repeat
+                                    wait(_G.FastAttack);
+                                    AttackNoCoolDown();
+                                    AutoHaki();
+                                    EquipTool(SelectWeapon);
+                                    v1031.HumanoidRootPart.CanCollide = false;
+                                    v1031.HumanoidRootPart.Size = Vector3.new(60, 60, 60);
+                                    Tween(v1031.HumanoidRootPart.CFrame * Pos);
+                                until (v1031.Humanoid.Health <= 0) or not v1031.Parent or not _G.CastleRaid
                             end
                         end
-                    else
-                        if BypassTP then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameCastleRaid.Position).Magnitude > 2500 then
-                        BTP(CFrameCastleRaid)
-                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameCastleRaid.Position).Magnitude < 2500 then
-                        Tween(CFrameCastleRaid)
-                        end
-                        end
                     end
-                end)
-            end
+                else
+                    Tween(v764);
+                end
+            end);
         end
-        end)
+    end
+end);
 
 
 local v55 = Tabs.Main:AddToggle("ToggleCollectChest", {
