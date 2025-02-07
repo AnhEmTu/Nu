@@ -3135,7 +3135,7 @@ end
         end
       end)
 
-local v51 = v16.Main:AddToggle("ToggleCastleRaid", {
+local v51 = Tabs.Main:AddToggle("ToggleCastleRaid", {
     Title = "Đấm Hải Tặc",
     Description = "farm pirate",
     Default = false
