@@ -3135,43 +3135,61 @@ end
         end
       end)
 
-local v51 = Tabs.Main:AddToggle("ToggleCastleRaid", {
+local v51 = v16.Main:AddToggle("ToggleCastleRaid", {
     Title = "Đấm Hải Tặc",
     Description = "farm pirate",
     Default = false
 });
+
 v51:OnChanged(function(v239)
     _G.CastleRaid = v239;
 end);
+
 v17.ToggleCastleRaid:SetValue(false);
+
 spawn(function()
     while wait() do
         if _G.CastleRaid then
             pcall(function()
-                local v764 = CFrame.new(- 5496.17432, 313.768921, - 2841.53027, 0.924894512, 7.37058e-9, 0.380223751, 3.588102e-8, 1, - 1.06665446e-7, - 0.380223751, 1.1229711e-7, 0.924894512);
-                if ((CFrame.new(- 5539.3115234375, 313.800537109375, - 2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500) then
-                    for v1030, v1031 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if (_G.CastleRaid and v1031:FindFirstChild("HumanoidRootPart") and v1031:FindFirstChild("Humanoid") and (v1031.Humanoid.Health > 0)) then
-                            if ((v1031.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000) then
-                                repeat
-                                    wait(_G.FastAttack);
-                                    AttackNoCoolDown();
-                                    AutoHaki();
-                                    EquipTool(SelectWeapon);
-                                    v1031.HumanoidRootPart.CanCollide = false;
-                                    v1031.HumanoidRootPart.Size = Vector3.new(60, 60, 60);
-                                    Tween(v1031.HumanoidRootPart.CFrame * Pos);
-                                until (v1031.Humanoid.Health <= 0) or not v1031.Parent or not _G.CastleRaid
+                local targetCFrame = CFrame.new(-5496.17432, 313.768921, -2841.53027, 
+                    0.924894512, 7.37058e-9, 0.380223751, 
+                    3.588102e-8, 1, -1.06665446e-7, 
+                    -0.380223751, 1.1229711e-7, 0.924894512
+                )
+
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+
+                local rootPart = character.HumanoidRootPart
+                local distance = (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - rootPart.Position).Magnitude
+
+                if distance <= 500 then
+                    for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if _G.CastleRaid and enemy:FindFirstChild("HumanoidRootPart") and enemy:FindFirstChild("Humanoid") then
+                            local humanoid = enemy.Humanoid
+                            if humanoid.Health > 0 then
+                                local enemyRoot = enemy.HumanoidRootPart
+                                if (enemyRoot.Position - rootPart.Position).Magnitude < 2000 then
+                                    repeat
+                                        wait(1e-9) -- Thay vì FastAttack, chờ một chút để tránh lỗi
+                                        AutoHaki()
+                                        EquipTool(SelectWeapon)
+                                        enemyRoot.CanCollide = false
+                                        enemyRoot.Size = Vector3.new(60, 60, 60)
+                                        Tween(enemyRoot.CFrame * Pos)
+                                    until humanoid.Health <= 0 or not enemy.Parent or not _G.CastleRaid
+                                end
                             end
                         end
                     end
                 else
-                    Tween(v764);
+                    Tween(targetCFrame)
                 end
-            end);
+            end)
         end
     end
-end);
+end)
 
 
 local v55 = Tabs.Main:AddToggle("ToggleCollectChest", {
