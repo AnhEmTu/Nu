@@ -1,18 +1,40 @@
-local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
--- Âm thanh khởi động
-local startupSound = Instance.new("Sound")
-startupSound.SoundId = "rbxassetid://8594342648"
-startupSound.Volume = 5
-startupSound.Looped = false
-startupSound.Parent = game.CoreGui
-startupSound:Play()
+local success, Library = pcall(function()
+    return loadstring(game:HttpGet("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
+end)
 
--- Hiển thị thông báo trên giao diện
-local Notification = require(game:GetService("ReplicatedStorage").Notification)
-Notification.new("<Color=Cyan>R2LX Hub <Color=/>"):Display()
-wait(0.5)
-Notification.new("<Color=Yellow>By R2LX Hub On Top👑<Color=/>"):Display()
-wait(1)
+if not success then
+    warn("Không thể tải thư viện Fluent. Kiểm tra kết nối mạng hoặc URL!")
+    return
+end
+
+-- Kiểm tra nếu executor có hỗ trợ CoreGui
+local CoreGui = game:FindFirstChild("CoreGui") or game:GetService("Players").LocalPlayer:FindFirstChildOfClass("PlayerGui")
+
+if CoreGui then
+    local startupSound = Instance.new("Sound")
+    startupSound.SoundId = "rbxassetid://8594342648"
+    startupSound.Volume = 5
+    startupSound.Looped = false
+    startupSound.Parent = CoreGui
+    startupSound:Play()
+else
+    warn("Executor không hỗ trợ CoreGui, bỏ qua âm thanh khởi động.")
+end
+
+-- Kiểm tra và hiển thị thông báo
+local Notification
+local successNoti, err = pcall(function()
+    Notification = require(game:GetService("ReplicatedStorage").Notification)
+end)
+
+if successNoti and Notification then
+    Notification.new("<Color=Cyan>R2LX Hub <Color=/>"):Display()
+    wait(0.5)
+    Notification.new("<Color=Yellow>By R2LX Hub On Top👑<Color=/>"):Display()
+else
+    warn("Không tìm thấy module Notification. Bỏ qua thông báo.")
+end
+
 shared.LoaderTitle = "R2LX HUB";
 shared.LoaderKeyFrames = {
     [1] = {
