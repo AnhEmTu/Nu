@@ -1,4 +1,4 @@
-
+local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 -- Âm thanh khởi động
 local startupSound = Instance.new("Sound")
 startupSound.SoundId = "rbxassetid://8594342648"
