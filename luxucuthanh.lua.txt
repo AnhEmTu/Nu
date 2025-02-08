@@ -3182,7 +3182,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Hazz/refs/hea
   })
   
 local Mastery = Tabs.Main:AddSection("Cày Thông Thạo")
-local v57 = v16.Main:AddDropdown("DropdownMastery", {
+local v57 = Tabs.Main:AddDropdown("DropdownMastery", {
     Title = "Cày Thông Thạo",
     Description = "farm mastery",
     Values = {
@@ -3203,7 +3203,7 @@ local v58 = Tabs.Main:AddToggle("ToggleMasteryFruit", {
 v58:OnChanged(function(v250)
     AutoFarmMasDevilFruit = v250;
 end);
-v17.ToggleMasteryFruit:SetValue(false);
+Options.ToggleMasteryFruit:SetValue(false);
 local v59 = v16.Main:AddSlider("SliderHealt", {
     Title = "Máu Quái",
     Description = "healt mod",
@@ -5355,13 +5355,13 @@ local mouse = lp:GetMouse()
 mouse.Button1Down:Connect(function()
     if Aimbot and game.Players.LocalPlayer.Character:FindFirstChild(SelectToolWeaponGun) and game:GetService("Players"):FindFirstChild(SelectPlayer) then
         tool = game:GetService("Players").LocalPlayer.Character[SelectToolWeaponGun]
-        v17 = workspace:FindPartOnRayWithIgnoreList(
+        Options = workspace:FindPartOnRayWithIgnoreList(
             Ray.new(tool.Handle.CFrame.p,
                 (game:GetService("Players"):FindFirstChild(SelectPlayer).Character.HumanoidRootPart.Position - tool.Handle.CFrame.p)
                 .unit * 100), { game.Players.LocalPlayer.Character, workspace._WorldOrigin });
         game:GetService("Players").LocalPlayer.Character[SelectToolWeaponGun].RemoteFunctionShoot:InvokeServer(
             game:GetService("Players"):FindFirstChild(SelectPlayer).Character.HumanoidRootPart.Position,
-            (require(game.ReplicatedStorage.Util).Other.hrpFromPart(v17)));
+            (require(game.ReplicatedStorage.Util).Other.hrpFromPart(Options)));
     end
 end)
 
